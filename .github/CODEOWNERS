@@ -1,0 +1,12 @@
+/.editorconfig desk.abhimanyu@gmail.com
+/.github/workflows/* desk.abhimanyu@gmail.com
+/.gitignore desk.abhimanyu@gmail.com
+/MANIFEST.in desk.abhimanyu@gmail.com
+/README.md desk.abhimanyu@gmail.com
+/oms/rclone/commands/* desk.abhimanyu@gmail.com
+/oms/rclone/storage/* desk.abhimanyu@gmail.com
+/requirements.txt desk.abhimanyu@gmail.com
+/requirements_dev.txt desk.abhimanyu@gmail.com
+/scripts/* desk.abhimanyu@gmail.com
+/setup.py desk.abhimanyu@gmail.com
+/tox.ini desk.abhimanyu@gmail.com
