@@ -132,8 +132,3 @@ description = ""
 color = "ffffff"
 name = "type: wontfix"
 description = "This will not be worked on"
-
-["type: ui/ux"]
-color = "5319E7"
-name = "type: ui/ux"
-description = "UI/UX design"
