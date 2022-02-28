@@ -2,7 +2,7 @@ import json
 import logging
 import os
 import subprocess
-from typing import List, Union, Optional, Dict
+from typing import List, Union, Optional, Dict, Any
 
 from semver import VersionInfo
 
@@ -24,34 +24,16 @@ class Command:
 		if version.major < MAJOR_MIN_VERSION or version.minor < MINOR_MIN_VERSION:
 			raise Exception(f"Minimum version {MAJOR_MIN_VERSION}.{MINOR_MIN_VERSION}.0 required, found {version}")
 
-	def __execute(self, command: List) -> [bool, List]:
-		self.__log("debug", f"Executing {' '.join([c for c in command])}")
-		process = subprocess.Popen(command, stdout=subprocess.PIPE, universal_newlines=True)
-		result = []
-		failed = False
-		while True:
-			output = process.stdout.readline()
-			if output:
-				result.append(output.strip())
-			self.__log("info", output.strip())
-			return_code = process.poll()
-			if return_code is not None:
-				self.__log("debug", f"Return Code: {return_code}")
+	def __execute(self, command: List) -> Any:
+		self.__log("debug", f"{' '.join([c for c in command])}")
+		process = subprocess.run(command, capture_output=True, text=True)
 
-			try:
-				if return_code >= 1:
-					# Process failed
-					failed = True
-					break
-				if not return_code:
-					# Process succeeded
-					break
-				if failed:
-					# Immediately break the loop
-					break
-			except TypeError:
-				continue
-		return not failed, result
+		try:
+			result = json.loads(process.stdout)
+		except json.decoder.JSONDecodeError:
+			result = process.stdout
+
+		return result
 
 	@staticmethod
 	def __log(log_type: str, message: str):
@@ -84,17 +66,19 @@ class Command:
 		self.__log("error", f"Binary {name} not found")
 		return ""
 
-	def rc(self, command: str, parameters: Optional[Dict] = None):
+	def rc(self, command: str, parameters: Optional[Dict] = None) -> Dict:
+		command = ["rclone", "rc", command]
+
 		if parameters:
-			_, result = self.__execute(command=["rclone", "rc", command, "--json", json.dumps(parameters)])
-			return json.loads(result[0])
+			command.append("--json")
+			command.append(json.dumps(parameters))
+			return self.__execute(command=command)
+		return self.__execute(command=command)
 
 	def version(self) -> Union[VersionInfo, str]:
 		"""
 		:return: Returns semver compliant version
 		"""
-		success, version = self.__execute(command=[BINARY, "version"])
-		if success:
-			# Parse the version
-			return VersionInfo.parse(version[0].split(" ")[-1].lstrip("v"))
-		return ""
+		version = self.__execute(command=[BINARY, "version"])
+		# Parse the version
+		return VersionInfo.parse(version.split("\n")[0].split(" ")[-1].lstrip("v"))
