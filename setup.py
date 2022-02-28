@@ -27,5 +27,5 @@ setup(
 		'Programming Language :: Python :: 3.10',
 		'Topic :: Software Development :: Libraries',
 	],
-	packages=find_packages(include=['oms', 'oms.rclone'])
+	packages=find_packages(include=['oms', 'oms.*'])
 )
