@@ -2,6 +2,7 @@
 /.github/* 41898282+github-actions[bot]@users.noreply.github.com
 /.github/workflows/* desk.abhimanyu@gmail.com
 /.gitignore desk.abhimanyu@gmail.com
+/CHANGELOG.md 41898282+github-actions[bot]@users.noreply.github.com
 /MANIFEST.in desk.abhimanyu@gmail.com
 /README.md desk.abhimanyu@gmail.com
 /oms/rclone/commands/* desk.abhimanyu@gmail.com
