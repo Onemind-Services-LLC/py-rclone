@@ -1,0 +1,23 @@
+name: Automerge
+on:
+  check_suite:
+    types:
+      - completed
+
+jobs:
+  automerge:
+    runs-on: self-hosted
+    if: |
+      github.actor == 'dependabot[bot]' ||
+      github.actor == 'dependabot' ||
+      github.actor == 'github-actions[bot]'
+    steps:
+      - name: automerge
+        uses: pascalgn/automerge-action@v0.14.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          MERGE_METHOD: "rebase"
+          UPDATE_METHOD: "rebase"
+          MERGE_RETRIES: "6"
+          MERGE_RETRY_SLEEP: "100000"
+          MERGE_LABELS: ""

@@ -1,0 +1,29 @@
+name: Bot auto approve
+
+on: pull_request_target
+
+# This ensures that previous jobs for the workflow are canceled when the ref is
+# updated.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  auto-approve:
+    runs-on: self-hosted
+    steps:
+      - uses: hmarr/auto-approve-action@v2.1.0
+        if: |
+          (
+            github.event.pull_request.user.login == 'dependabot[bot]' ||
+            github.event.pull_request.user.login == 'dependabot' ||
+            github.event.pull_request.user.login == 'github-actions[bot]'
+          )
+            &&
+          (
+            github.actor == 'dependabot[bot]' ||
+            github.actor == 'dependabot' ||
+            github.actor == 'github-actions[bot]'
+          )
+        with:
+          github-token: ${{ secrets.GIT_TOKEN }}
