@@ -15,7 +15,7 @@ with open("README.md", "r") as fh:
 
 setup(
 	name='py-rclone',
-	version='0.0.1',
+	version='0.0.2',
 	url='https://github.com/Onemind-Services-LLC/py-rclone',
 	description='Python client for rClone',
 	long_description=long_description,
