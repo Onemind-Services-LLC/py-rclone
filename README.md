@@ -8,6 +8,12 @@ A Python wrapper for [rClone](https://rclone.org/).
 
 - rClone: Minimum version `v1.57.0`
 
+### Installation
+
+```shell
+pip install git+https://github.com/Onemind-Services-LLC/py-rclone.git@tag
+```
+
 ### Usage
 
 Traditionally `rClone` has been used as CLI tool. It provides integration for several providers out of the box. However, there hasn't been a good
