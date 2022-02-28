@@ -6,7 +6,7 @@ on:
 
 jobs:
   automerge:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: |
       github.actor == 'dependabot[bot]' ||
       github.actor == 'dependabot' ||

@@ -1,0 +1,4 @@
+tox
+tox-gh-actions
+coverage
+codacy-coverage
