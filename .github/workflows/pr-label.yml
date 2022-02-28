@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   enforce-labels:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: |
       github.actor != 'dependabot[bot]' ||
       github.actor != 'dependabot' ||

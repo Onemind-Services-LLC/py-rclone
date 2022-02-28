@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   auto-approve:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: hmarr/auto-approve-action@v2.1.0
         if: |

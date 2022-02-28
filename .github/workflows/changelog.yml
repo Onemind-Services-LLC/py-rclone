@@ -15,7 +15,7 @@ concurrency:
 jobs:
   build:
     name: "Changelog Generator"
-    runs-on: misc
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     if: github.ref_protected != 'true'
     steps:
