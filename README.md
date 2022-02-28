@@ -35,3 +35,11 @@ config = Config()
 config.create(name="minio", parameters=minio.parameters, remote_type=minio.remote_type)
 ```
 
+#### Environment Variables
+
+`py-rclone` uses environment variables to setup remote control configuration.
+
+- `RC_HOSTNAME`: Defaults to `localhost`
+- `RC_PORT`: Defaults to `5572`
+- `RC_USERNAME`: Defaults to `None`
+- `RC_PASSWORD`: Defaults to `None`

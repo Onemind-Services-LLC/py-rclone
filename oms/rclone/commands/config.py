@@ -7,7 +7,6 @@ class Config(CommandAbstract):
 	"""
 	Wrapper for `rclone config`
 	"""
-
 	def __init__(self, obscure: bool = False):
 		"""
 		:param obscure: Declare passwords are plain and need obscuring

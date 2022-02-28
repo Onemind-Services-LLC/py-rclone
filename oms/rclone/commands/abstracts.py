@@ -1,10 +1,8 @@
-import logging
+from abc import ABC
 
 from .common import Command
 
-logger = logging.getLogger(__name__)
 
-
-class CommandAbstract:
+class CommandAbstract(ABC):
 	def __init__(self):
 		self.cmd = Command()

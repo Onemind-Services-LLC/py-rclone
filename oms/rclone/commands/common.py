@@ -24,9 +24,17 @@ class Command:
 		if version.major < MAJOR_MIN_VERSION or version.minor < MINOR_MIN_VERSION:
 			raise Exception(f"Minimum version {MAJOR_MIN_VERSION}.{MINOR_MIN_VERSION}.0 required, found {version}")
 
+		self.__hostname = os.environ.get("RC_HOSTNAME", "localhost")
+		self.__port = os.environ.get("RC_PORT", 5572)
+		self.__username = os.environ.get("RC_USERNAME", None)
+		self.__password = os.environ.get("RC_PASSWORD", None)
+
 	def __execute(self, command: List) -> Any:
 		self.__log("debug", f"{' '.join([c for c in command])}")
 		process = subprocess.run(command, capture_output=True, text=True)
+
+		if process.stderr != "":
+			raise Exception(process.stderr)
 
 		try:
 			result = json.loads(process.stdout)
@@ -67,13 +75,23 @@ class Command:
 		return ""
 
 	def rc(self, command: str, parameters: Optional[Dict] = None) -> Dict:
-		command = ["rclone", "rc", command]
+		command_list = ["rclone", "rc", f"--rc-addr={self.__hostname}:{self.__port}"]
+
+		# Add the username or password if available
+		if self.__username:
+			command_list.append(f"--rc-user={self.__username}")
+
+		if self.__password:
+			command_list.append(f"--rc-pass={self.__password}")
+
+		# Add the command to the list
+		command_list.append(command)
 
 		if parameters:
-			command.append("--json")
-			command.append(json.dumps(parameters))
-			return self.__execute(command=command)
-		return self.__execute(command=command)
+			command_list.append("--json")
+			command_list.append(json.dumps(parameters))
+			return self.__execute(command=command_list)
+		return self.__execute(command=command_list)
 
 	def version(self) -> Union[VersionInfo, str]:
 		"""
