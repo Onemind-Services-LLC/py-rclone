@@ -79,3 +79,6 @@ class Config:
 			upload_cutoff=upload_cutoff
 		)
 		return self.__create(name=name, parameters=minio.parameters, remote_type=minio.remote_type)
+
+	def delete(self, name: str):
+		return self.__cmd.rc(command="config/delete", parameters={"name": name})
