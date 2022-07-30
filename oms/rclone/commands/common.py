@@ -30,7 +30,7 @@ class Command:
 		self.__password = os.environ.get("RC_PASSWORD", None)
 
 	def __execute(self, command: List) -> Any:
-		self.__log("debug", f"{' '.join([c for c in command])}")
+		self.__log("debug", f"{' '.join(list(command))}")
 		process = subprocess.run(command, capture_output=True, text=True)
 
 		if process.stderr != "":
