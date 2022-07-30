@@ -8,7 +8,7 @@ if sys.version_info.major != 3:
 # https://caremad.io/2013/07/setup-vs-requirement/
 
 with open('./requirements.txt') as r:
-	requirements = [line for line in r]
+	requirements = list(r)
 
 with open("README.md", "r") as fh:
 	long_description = fh.read()
